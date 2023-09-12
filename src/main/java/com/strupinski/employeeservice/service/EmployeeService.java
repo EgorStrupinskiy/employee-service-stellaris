@@ -9,7 +9,6 @@ import java.util.List;
 
 @Service
 public interface EmployeeService {
-    List<Employee> getAllEmployees();
 
     Employee findEmployeeById(@PathVariable String id);
 
@@ -18,4 +17,6 @@ public interface EmployeeService {
 
 
     void deleteEmployeeById(@PathVariable String id);
+
+    List<Employee> getEmployeeList(int page, int pageSize);
 }
