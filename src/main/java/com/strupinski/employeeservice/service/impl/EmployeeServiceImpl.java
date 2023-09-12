@@ -1,6 +1,7 @@
 package com.strupinski.employeeservice.service.impl;
 
-import com.strupinski.employeeservice.entity.Employee;
+import com.strupinski.employeeservice.dto.EmployeeDTO;
+import com.strupinski.employeeservice.dto.mapper.EmployeeMapper;
 import com.strupinski.employeeservice.exception.NoSuchEmployeeException;
 import com.strupinski.employeeservice.repository.EmployeeRepository;
 import com.strupinski.employeeservice.service.EmployeeService;
@@ -18,23 +19,26 @@ public class EmployeeServiceImpl implements EmployeeService {
     private final EmployeeRepository employeeRepository;
 
     @Override
-    public Employee findEmployeeById(String id) {
-        return employeeRepository.findById(id).orElseThrow(() -> new NoSuchEmployeeException("There is no employee with id: " + id));
+    public EmployeeDTO findById(String id) {
+        return EmployeeMapper.INSTANCE.toDto(employeeRepository.findById(id).orElseThrow(() -> new NoSuchEmployeeException("There is no employee with id: " + id)));
     }
 
     @Override
-    public Employee saveEmployee(Employee employee) {
-        return employeeRepository.save(employee);
+    public EmployeeDTO save(EmployeeDTO employee) {
+        return EmployeeMapper.INSTANCE.toDto(employeeRepository.save(EmployeeMapper.INSTANCE.toEntity(employee)));
     }
 
     @Override
-    public void deleteEmployeeById(String id) {
+    public void deleteById(String id) {
         employeeRepository.deleteById(id);
     }
 
     @Override
-    public List<Employee> getEmployeeList(int page, int pageSize) {
+    public List<EmployeeDTO> getList(int page, int pageSize) {
         Pageable pageable = PageRequest.of(page, pageSize);
-        return employeeRepository.findAll(pageable).toList();
+        return employeeRepository.findAll(pageable)
+                .stream()
+                .map(EmployeeMapper.INSTANCE::toDto)
+                .toList();
     }
 }

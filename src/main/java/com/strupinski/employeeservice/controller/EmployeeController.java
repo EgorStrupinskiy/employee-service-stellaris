@@ -1,6 +1,6 @@
 package com.strupinski.employeeservice.controller;
 
-import com.strupinski.employeeservice.entity.Employee;
+import com.strupinski.employeeservice.dto.EmployeeDTO;
 import com.strupinski.employeeservice.service.EmployeeService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Positive;
@@ -16,22 +16,22 @@ public class EmployeeController {
     private final EmployeeService employeeService;
 
     @GetMapping("/employee/{id}")
-    public Employee findEmployeeById(@Valid @PathVariable String id) {
-        return employeeService.findEmployeeById(id);
+    public EmployeeDTO findById(@Valid @PathVariable String id) {
+        return employeeService.findById(id);
     }
 
     @PostMapping("/employee")
-    public Employee saveEmployee(@Valid @RequestBody Employee employee) {
-        return employeeService.saveEmployee(employee);
+    public EmployeeDTO save(@Valid @RequestBody EmployeeDTO employee) {
+        return employeeService.save(employee);
     }
 
     @DeleteMapping("/employee/{id}")
-    public void deleteEmployeeById(@Valid @PathVariable String id) {
-        employeeService.deleteEmployeeById(id);
+    public void deleteById(@Valid @PathVariable String id) {
+        employeeService.deleteById(id);
     }
 
     @GetMapping("/employees")
-    public List<Employee> findEmployeePage(@Positive @RequestParam(name = "page") int page, @Positive @RequestParam(name = "pageSize") int pageSize) {
-        return employeeService.getEmployeeList(page, pageSize);
+    public List<EmployeeDTO> findByPage(@Positive @RequestParam(name = "page") int page, @Positive @RequestParam(name = "pageSize") int pageSize) {
+        return employeeService.getList(page, pageSize);
     }
 }

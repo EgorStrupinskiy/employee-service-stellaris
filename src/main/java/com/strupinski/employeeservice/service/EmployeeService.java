@@ -1,22 +1,20 @@
 package com.strupinski.employeeservice.service;
 
-import com.strupinski.employeeservice.entity.Employee;
+import com.strupinski.employeeservice.dto.EmployeeDTO;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
 @Service
 public interface EmployeeService {
 
-    Employee findEmployeeById(@PathVariable String id);
+    EmployeeDTO findById(String id);
 
 
-    Employee saveEmployee(@RequestBody Employee employee);
+    EmployeeDTO save(EmployeeDTO employee);
 
 
-    void deleteEmployeeById(@PathVariable String id);
+    void deleteById(String id);
 
-    List<Employee> getEmployeeList(int page, int pageSize);
+    List<EmployeeDTO> getList(int page, int pageSize);
 }
