@@ -17,7 +17,6 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     private final EmployeeRepository employeeRepository;
 
-
     @Override
     public Employee findEmployeeById(String id) {
         return employeeRepository.findById(id).orElseThrow(() -> new NoSuchEmployeeException("There is no employee with id: " + id));
